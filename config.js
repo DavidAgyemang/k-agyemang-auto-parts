@@ -29,5 +29,5 @@ window.SITE_CONFIG = {
     "https://www.linkedin.com/in/david-agyemang1?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
 
   // WeChat QR image (for suppliers and partners in China)
-  wechatQr: "assets/images/wechat-qr.jpg"
+  wechatQr: "wechat-qr.jpg"
 };

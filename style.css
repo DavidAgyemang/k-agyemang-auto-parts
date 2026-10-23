@@ -14,29 +14,29 @@
    ========================================================================== */
 
 /* 1. Fonts and tokens ---------------------------------------------------- */
-/* Fonts are stored in assets/fonts so no visitor data goes to a third party.
+/* Fonts are stored in the main folder so no visitor data goes to a third party.
    Inter: SIL Open Font License. TeX Gyre Heros Cn: GUST Font License. */
 @font-face {
   font-family: "Inter";
-  src: url("../assets/fonts/inter-400.woff") format("woff");
+  src: url("inter-400.woff") format("woff");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "Inter";
-  src: url("../assets/fonts/inter-500.woff") format("woff");
+  src: url("inter-500.woff") format("woff");
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: "Inter";
-  src: url("../assets/fonts/inter-600.woff") format("woff");
+  src: url("inter-600.woff") format("woff");
   font-weight: 600;
   font-display: swap;
 }
 @font-face {
   font-family: "Heros Cn";
-  src: url("../assets/fonts/heros-cn-bold.woff") format("woff");
+  src: url("heros-cn-bold.woff") format("woff");
   font-weight: 700;
   font-display: swap;
 }

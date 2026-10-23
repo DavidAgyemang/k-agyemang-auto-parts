@@ -2,7 +2,7 @@
    K. Agyemang Auto Parts: main script (plain JavaScript, no libraries)
    Sections:
      1. Helpers
-     2. Fill contact links from js/config.js
+     2. Fill contact links from config.js
      3. Mobile menu
      4. Home page part finder
      5. Forms (validation, WhatsApp message, copy to clipboard)
@@ -412,10 +412,10 @@
     result.appendChild(intro);
 
     if (!link) {
-      // No WhatsApp number in js/config.js: say so plainly, do not pretend it was sent
+      // No WhatsApp number in config.js: say so plainly, do not pretend it was sent
       heading.textContent = "WhatsApp is not set up yet";
       intro.textContent =
-        "Your request has not been sent. The site owner needs to add a WhatsApp number in js/config.js. You can copy your request below and send it another way.";
+        "Your request has not been sent. The site owner needs to add a WhatsApp number in config.js. You can copy your request below and send it another way.";
     } else {
       heading.textContent = "Your request is ready to send";
       intro.textContent =

@@ -4,37 +4,28 @@ A fast, static website (HTML, CSS and plain JavaScript) for GitHub Pages. No ser
 
 ## 1. What is in this folder
 
+The site uses a **flat layout**: every file sits in the main folder of the repository, with no sub-folders. This keeps uploading to GitHub simple.
+
 ```
-k-agyemang-auto-parts/
-├── index.html          Home page
-├── services.html       Services
-├── garages.html        Garages and business customers (with business enquiry form)
-├── about.html          About us
-├── contact.html        Contact details
-├── request.html        Request a Part form (the most important page)
-├── privacy.html        Privacy notice (starter text, see section 9)
-├── terms.html          Terms and conditions (starter text, see section 9)
-├── 404.html            Page shown for a missing address
-├── sitemap.xml         List of pages for search engines
-├── robots.txt          Tells search engines they may read the site
-├── .nojekyll           Tells GitHub Pages to publish the files exactly as they are
-├── css/style.css       All styling. Colours and fonts are at the top, in :root
-├── js/config.js        YOUR CONTACT DETAILS. Edit this file to change numbers and links
-├── js/main.js          Menu, form checks, WhatsApp message builder
-└── assets/
-    ├── images/         Photos, business card, WeChat QR, favicon, social image
-    ├── video/          The four supplier visit clips
-    └── fonts/          Inter and TeX Gyre Heros Cn (self-hosted, no Google Fonts)
+index.html, services.html, garages.html, about.html, contact.html,
+request.html, privacy.html, terms.html, 404.html   The pages
+style.css            All styling. Colours and fonts are at the top, in :root
+config.js            YOUR CONTACT DETAILS. Edit this file to change numbers and links
+main.js              Menu, form checks, WhatsApp message builder
+sitemap.xml, robots.txt   For search engines
+*.jpg, favicon.svg   Photos, business card, WeChat QR, favicon, social image
+supplier-visit-1..4.mp4   The four supplier visit clips
+inter-*.woff, heros-cn-bold.woff   Fonts (self-hosted, no Google Fonts)
 ```
 
-All links are relative (for example `css/style.css`, never `/css/style.css`), so the site works inside a GitHub Pages project address like `https://USERNAME.github.io/k-agyemang-auto-parts/`.
+All links are relative (for example `style.css`, never `/style.css`), so the site works inside a GitHub Pages project address like `https://USERNAME.github.io/k-agyemang-auto-parts/`.
 
 ## 2. Put it on GitHub (no command line needed)
 
 1. Unzip the folder on your computer.
 2. Open your repository `k-agyemang-auto-parts` on github.com.
 3. Click **Add file → Upload files**.
-4. Open the unzipped folder and drag **everything inside it** (the HTML files, `css`, `js`, `assets`, `.nojekyll`, `README.md`) into the browser. Do not drag the outer folder itself, because `index.html` must sit at the top level of the repository. If `.nojekyll` is hidden on your computer, skip it. The site still works.
+4. Open the unzipped folder, select **all the files inside it** and drag them into the browser. Do not drag the outer folder itself, because `index.html` must sit at the top level of the repository. The site uses a flat layout, so there are no sub-folders to upload.
 5. Write a message such as `Add first version of website` and click **Commit changes**.
 
 If you prefer the command line:
@@ -65,7 +56,7 @@ To appear in Google: add your site in Google Search Console (search.google.com/s
 
 ## 5. Change contact details (one place only)
 
-Open `js/config.js`. It holds the WhatsApp number, phone number, email, Instagram, LinkedIn and WeChat QR file name.
+Open `config.js`. It holds the WhatsApp number, phone number, email, Instagram, LinkedIn and WeChat QR file name.
 
 - `whatsappNumber` is digits only with the country code, no `+` or spaces (for example `233549498212`). It powers every "Chat on WhatsApp" button and the Request a Part form.
 - Leave a value as `""` to hide it. The **email** is empty now, so no email appears anywhere. Add `email: "info@yourdomain.com"` when you have one and it shows up on the contact page and footer by itself.
@@ -87,7 +78,7 @@ Things to know:
 - **Nothing is stored.** No localStorage, no cookies, no analytics.
 - The home page finder and the category rows send customers to the form with the vehicle or part already filled in, using the web address (for example `request.html?make=Toyota&part=Grille`).
 - The business enquiry form on `garages.html` works the same way.
-- To change the wording of the WhatsApp message, edit the `BUILDERS` section in `js/main.js`.
+- To change the wording of the WhatsApp message, edit the `BUILDERS` section in `main.js`.
 
 ## 7. What needs a backend later (not built, on purpose)
 
@@ -104,12 +95,12 @@ These need a server and a database. They are not faked on this website.
 | Inventory integrations | Needs server-side connections to stock systems |
 | Automated compatibility assistance | Needs a parts database and server logic |
 
-A sensible path: build a Python FastAPI or Django service with PostgreSQL. Then change the form so that after validation it sends the data to your API instead of opening WhatsApp. In `js/main.js`, `readForm(form)` already returns every answer as a simple object, ready to send as JSON with `fetch`. Until then, a hosted form service (such as Formspree or Web3Forms) is a quick step that does not need your own server.
+A sensible path: build a Python FastAPI or Django service with PostgreSQL. Then change the form so that after validation it sends the data to your API instead of opening WhatsApp. In `main.js`, `readForm(form)` already returns every answer as a simple object, ready to send as JSON with `fetch`. Until then, a hosted form service (such as Formspree or Web3Forms) is a quick step that does not need your own server.
 
 ## 8. Updating the site after it is live
 
 - **Small text change:** open the file on github.com, click the pencil icon, edit, and commit. The site updates in one to two minutes.
-- **New photo:** upload it to `assets/images/`, then use its file name in the HTML (see section 10 for how to swap an image).
+- **New photo:** upload it to the main folder, then use its file name in the HTML (see section 10 for how to swap an image).
 - **Bigger changes:** edit on your computer, then `git add .`, `git commit -m "Describe the change"`, `git push`.
 - If you do not see the change, hard refresh the page (Ctrl+Shift+R, or Cmd+Shift+R on a Mac).
 
@@ -117,19 +108,19 @@ A sensible path: build a Python FastAPI or Django service with PostgreSQL. Then 
 
 - `privacy.html` and `terms.html` are **starter texts**. They describe how this website works today. Have them reviewed by a qualified person and add your returns and warranty policy. Ghana's Data Protection Act, 2012 (Act 843) may apply to your business, so check whether you need to register with the Data Protection Commission.
 - **Photos of other people:** the photos from the trade event and the supplier visit show other people. Get their permission (a WhatsApp message is enough) before keeping them on a public website. To remove one, delete its `<figure>` block in `about.html`.
-- `assets/images/delegation-selfie.jpg` is included but not used on any page.
+- `delegation-selfie.jpg` is included but not used on any page.
 - The business facts on the site came from you: established 1995 (from your business card), shops in Suame and Abossey Okai, and delivery across Ghana. Correct them in the HTML if anything is wrong.
 
 ## 10. Troubleshooting
 
 **The page looks plain (no colours or layout).** The CSS file is not loading.
-- Check that the `css` folder is at the top level of the repository, next to `index.html`, and the file is exactly `css/style.css` (names are case sensitive on GitHub).
-- Check you uploaded the contents of the folder, not the outer folder. Opening `https://USERNAME.github.io/k-agyemang-auto-parts/css/style.css` should show the CSS text.
+- Check that `style.css` is in the main list of files, next to `index.html`, and spelled exactly like that (names are case sensitive on GitHub).
+- Check you uploaded the contents of the folder, not the outer folder. Opening `https://USERNAME.github.io/k-agyemang-auto-parts/style.css` should show the CSS text.
 
 **Images or videos do not show.**
 - Open the browser developer tools (F12) and look at the **Network** tab for red 404 lines. They show the exact path that failed.
 - Make sure the file name in the HTML matches the real file, including capital letters and `.jpg` against `.jpeg`.
-- To swap a photo, upload the new file into `assets/images/` and change the `src="assets/images/..."` text in the HTML. Keep the `alt="..."` description accurate.
+- To swap a photo, upload the new file into the main folder and change the `src="..."` text in the HTML. Keep the `alt="..."` description accurate.
 
 **A link goes to the wrong place or a 404 page.**
 - Links must be relative, like `contact.html`. A link that starts with `/` (like `/contact.html`) breaks on a project site.
