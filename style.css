@@ -360,7 +360,8 @@ a {
 .hero-line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.06em;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.1em;
 }
 .hero-line > span {
   display: block;
@@ -1235,5 +1236,412 @@ a {
   }
   * {
     transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   Catalogue page
+   ========================================================================== */
+.catalogue-search label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+.search-row {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 40rem;
+}
+.search-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid #8d8d88;
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.05rem;
+}
+.search-row input:focus {
+  outline: 3px solid var(--red);
+  outline-offset: 1px;
+  border-color: var(--ink);
+}
+.cat-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+.cat-filters[hidden] {
+  display: none;
+}
+.cat-chip {
+  padding: 0.5rem 1.05rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.cat-chip:hover {
+  background: var(--mist);
+}
+.cat-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+}
+.cat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0 1rem;
+  color: var(--muted);
+}
+.cat-toolbar p {
+  margin: 0;
+}
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--red-hover);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.link-button[hidden] {
+  display: none;
+}
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.cat-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--mist);
+}
+.cat-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.1rem 1.25rem 1.4rem;
+}
+.cat-body h3 {
+  margin-bottom: 0.35rem;
+}
+.cat-meta {
+  margin-bottom: 0.75rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.cat-note {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.cat-body .btn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+.cat-empty {
+  margin-top: 1rem;
+}
+.cat-empty[hidden] {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .site-nav ul {
+    gap: 1.15rem;
+  }
+  .site-nav a {
+    font-size: 0.92rem;
+  }
+}
+@media (max-width: 920px) {
+  .cat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .site-nav a {
+    font-size: 0.97rem;
+  }
+}
+@media (max-width: 680px) {
+  .cat-grid {
+    grid-template-columns: 1fr;
+  }
+  .search-row {
+    flex-direction: column;
+  }
+}
+
+
+/* ==========================================================================
+   Motion
+   Calm, short movements that guide the eye. Everything here is switched off
+   for visitors who ask their device for reduced motion.
+   The list of elements that ease in on scroll must match REVEAL_SELECTOR in main.js.
+   ========================================================================== */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  width: 100%;
+  height: 3px;
+  background: var(--red-on-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Header settles once you scroll */
+  .site-header {
+    transition: box-shadow 0.25s ease;
+  }
+  .header-inner {
+    transition: min-height 0.25s ease;
+  }
+  .site-header.is-scrolled {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+  .site-header.is-scrolled .header-inner {
+    min-height: 3.75rem;
+  }
+
+  /* Sections ease in as they come into view */
+  .js .section-head,
+  .js .path,
+  .js .index-row,
+  .js .brand-line,
+  .js .step,
+  .js .benefit,
+  .js .media-figure,
+  .js .gallery figure,
+  .js .notice,
+  .js .faq details,
+  .js .contact-item,
+  .js .service,
+  .js .fact,
+  .js .form-slip,
+  .js .band-inner > div,
+  .js .prose,
+  .js .two-col > figure {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js .is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* The list rows keep their own hover movement, so only fade them */
+  .js .index-row {
+    transform: none;
+  }
+  .js .index-row.is-visible {
+    transition: opacity 0.7s ease, background-color 0.15s ease, padding-left 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  /* Process steps draw their top line */
+  .js .step {
+    border-top-color: transparent;
+  }
+  .js .step::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s;
+  }
+  .js .section--dark .step::after {
+    background: #fff;
+  }
+  .js .step.is-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* Red accent bars grow in */
+  .js .benefit::before {
+    width: 0;
+    transition: width 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s;
+  }
+  .js .benefit.is-visible::before {
+    width: 2.75rem;
+  }
+
+  /* Hero: headline, then supporting text and actions, with the photo settling */
+  .hero-lead,
+  .hero .btn-row,
+  .finder {
+    animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero-lead {
+    animation-delay: 0.35s;
+  }
+  .hero .btn-row {
+    animation-delay: 0.5s;
+  }
+  .finder {
+    animation-delay: 0.65s;
+  }
+  .hero-photo img {
+    animation: photo-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both, photo-settle 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+  }
+  .hero-photo figcaption {
+    animation: rise 0.8s ease 0.9s both;
+  }
+  @keyframes photo-settle {
+    from {
+      transform: scale(1.07);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* Inner page headers */
+  .page-head h1 {
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .page-head p {
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.12s both;
+  }
+
+  /* Buttons and cards respond to the pointer */
+  .btn {
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+  }
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+  .chip-list a,
+  .cat-chip {
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .chip-list a:hover,
+  .cat-chip:hover {
+    transform: translateY(-1px);
+  }
+  .cat-card {
+    overflow: hidden;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .cat-card img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .cat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+  }
+  .cat-card:hover img {
+    transform: scale(1.05);
+  }
+  .cat-card.is-new {
+    animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+  .media-figure video {
+    transition: transform 0.4s ease;
+  }
+
+  /* Opening and feedback moments */
+  .faq details[open] p {
+    animation: rise-small 0.35s ease both;
+  }
+  .site-nav.is-open {
+    animation: rise-small 0.22s ease both;
+  }
+  .form-summary:not([hidden]),
+  .result:not([hidden]) {
+    animation: rise-small 0.4s ease both;
+  }
+  .field-error:not(:empty) {
+    animation: fade-in 0.25s ease both;
+  }
+  /* The "not found" box appears on demand, so it is never held back by the scroll reveal */
+  .js .cat-empty {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .cat-empty:not([hidden]) {
+    animation: rise-small 0.4s ease both;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes rise-small {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

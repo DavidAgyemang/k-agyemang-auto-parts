@@ -543,11 +543,80 @@
     });
   }
 
+  /* 7. Motion: scroll reveal, header, progress bar ------------------------- */
+  // Must match the reveal list in style.css (section "Motion")
+  var REVEAL_SELECTOR =
+    ".section-head, .path, .index-row, .brand-line, .step, .benefit, .media-figure, .gallery figure, .notice, .faq details, .contact-item, .service, .fact, .form-slip, .band-inner > div, .prose, .two-col > figure";
+
+  function setupMotion() {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var header = qs(".site-header");
+    var bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    bar.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bar);
+
+    // Header shadow and progress bar, updated at most once per frame
+    var waiting = false;
+    function onScroll() {
+      if (waiting) {
+        return;
+      }
+      waiting = true;
+      window.requestAnimationFrame(function () {
+        var top = window.pageYOffset || document.documentElement.scrollTop;
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        if (header) {
+          header.classList.toggle("is-scrolled", top > 8);
+        }
+        bar.style.transform = "scaleX(" + (max > 0 ? Math.min(top / max, 1) : 0) + ")";
+        waiting = false;
+      });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    onScroll();
+
+    // Reveal sections as they come into view. Staggers items that share a parent.
+    var items = qsa(REVEAL_SELECTOR);
+    if (reduce || !("IntersectionObserver" in window)) {
+      items.forEach(function (el) {
+        el.classList.add("is-visible");
+      });
+      return;
+    }
+    items.forEach(function (el) {
+      var position = 0;
+      var siblings = el.parentNode ? el.parentNode.children : [];
+      for (var i = 0; i < siblings.length && siblings[i] !== el; i++) {
+        if (siblings[i].matches && siblings[i].matches(REVEAL_SELECTOR)) {
+          position++;
+        }
+      }
+      el.style.setProperty("--reveal-delay", Math.min(position, 5) * 90 + "ms");
+    });
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
+    );
+    items.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     applyConfig();
     setupMenu();
     setupFinder();
     setupForms();
     setupVideos();
+    setupMotion();
   });
 })();

@@ -13,6 +13,9 @@ style.css            All styling. Colours and fonts are at the top, in :root
 config.js            YOUR CONTACT DETAILS. Edit this file to change numbers and links
 main.js              Menu, form checks, WhatsApp message builder
 sitemap.xml, robots.txt   For search engines
+catalogue.html       Searchable parts catalogue
+parts-data.js        THE PARTS LIST. Add and edit catalogue parts here
+catalogue.js         Search and filter script for the catalogue
 *.jpg, favicon.svg   Photos, business card, WeChat QR, favicon, social image
 supplier-visit-1..4.mp4   The four supplier visit clips
 inter-*.woff, heros-cn-bold.woff   Fonts (self-hosted, no Google Fonts)
@@ -79,6 +82,30 @@ Things to know:
 - The home page finder and the category rows send customers to the form with the vehicle or part already filled in, using the web address (for example `request.html?make=Toyota&part=Grille`).
 - The business enquiry form on `garages.html` works the same way.
 - To change the wording of the WhatsApp message, edit the `BUILDERS` section in `main.js`.
+
+## 6b. The parts catalogue
+
+`catalogue.html` shows parts as cards with a search box and category buttons. Everything is filtered inside the visitor's browser, so nothing is stored or sent anywhere.
+
+**To add a part:**
+1. Upload the part's photo to the repository (landscape photos around 800 x 600 pixels work best).
+2. Open `parts-data.js` on GitHub and click the pencil icon.
+3. Copy one block between `{` and `}`, paste it after the last block (keep the comma between blocks), and change the name, category, description, image file name and keywords. The instructions at the top of that file explain each line.
+4. Commit. The part appears on the site after about two minutes.
+
+Rules to keep the catalogue honest:
+- Only list a vehicle make under `brands` when you are sure the part fits. Leave `brands: []` if unsure.
+- Prices are left out on purpose, because they change and are confirmed for each request.
+- Category buttons are made automatically from the categories you use.
+- The four starting parts use photos from your own shop and supplier visit. Replace them with better photos of specific parts when you have them.
+
+## 6c. Animations
+
+The site uses a small amount of calm motion: sections ease in as you scroll, the header settles and gets a soft shadow, a thin red progress line shows how far down the page you are, buttons and catalogue cards respond to the pointer, and pages fade softly when you move between them (in browsers that support it).
+
+- Visitors who set "reduce motion" on their phone or computer see none of it: everything shows immediately.
+- All animation styles are in the last section of `style.css`, titled "Motion". To make it calmer, delete rules there, or change the `0.7s` times to shorter ones.
+- The list of elements that ease in on scroll is `REVEAL_SELECTOR` in `main.js`. It must match the list in `style.css`.
 
 ## 7. What needs a backend later (not built, on purpose)
 
