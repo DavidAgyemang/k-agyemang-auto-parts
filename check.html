@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>File check</title>
+<style>
+body{font:16px/1.5 Arial,sans-serif;margin:0;padding:20px;background:#000;color:#fff}
+h1{font-size:22px;margin:0 0 6px}
+p{color:#ccc;margin:0 0 16px}
+.sum{font-size:18px;font-weight:bold;margin:12px 0}
+.ok{color:#6fdc8c}.bad{color:#ff5459}
+ul{list-style:none;padding:0;margin:0}
+li{padding:6px 0;border-bottom:1px solid #333;word-break:break-all}
+</style>
+</head>
+<body>
+<h1>Website file check</h1>
+<p>This private page checks that every picture, video, font and script is on the site. Take a screenshot of the result and send it. Delete check.html from the repository when you are done.</p>
+<div class="sum" id="sum">Checking...</div>
+<ul id="list"></ul>
+<script>
+var files=["style.css","main.js","config.js","catalogue.js","parts-data.js","favicon.svg","og-image.jpg",
+"heros-cn-bold.woff","inter-400.woff","inter-500.woff","inter-600.woff",
+"business-card.jpg","wechat-qr.jpg","showroom-body-parts.jpg","ev-expo-guangzhou.jpg","delegation-portrait.jpg","delegation-mural.jpg",
+"catalogue-grille.jpg","catalogue-lower-grille.jpg","catalogue-side-steps.jpg","catalogue-headlamps.jpg",
+"poster-supplier-visit-1.jpg","poster-supplier-visit-2.jpg","poster-supplier-visit-3.jpg","poster-supplier-visit-4.jpg",
+"supplier-visit-1.mp4","supplier-visit-2.mp4","supplier-visit-3.mp4","supplier-visit-4.mp4",
+"index.html","services.html","catalogue.html","garages.html","about.html","contact.html","request.html","privacy.html","terms.html","404.html","sitemap.xml","robots.txt"];
+var list=document.getElementById("list"),sum=document.getElementById("sum"),bad=0,done=0;
+files.forEach(function(f){
+  var li=document.createElement("li");li.textContent=f+" ...";list.appendChild(li);
+  fetch(f+"?check="+Date.now(),{method:"GET",headers:{Range:"bytes=0-0"}}).then(function(r){
+    var okk=r.status===200||r.status===206;
+    if(!okk)bad++;
+    li.innerHTML=(okk?'<span class="ok">OK</span> ':'<span class="bad">MISSING ('+r.status+')</span> ')+f;
+  }).catch(function(){bad++;li.innerHTML='<span class="bad">ERROR</span> '+f;}).then(function(){
+    done++;
+    if(done===files.length){sum.innerHTML=bad===0?'<span class="ok">All '+files.length+' files found.</span>':'<span class="bad">'+bad+' file(s) missing. See the red lines.</span>';}
+  });
+});
+</script>
+</body>
+</html>

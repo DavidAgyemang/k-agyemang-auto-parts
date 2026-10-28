@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://davidagyemang.github.io/k-agyemang-auto-parts/sitemap.xml
